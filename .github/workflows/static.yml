@@ -34,17 +34,20 @@ jobs:
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Fetch codebrower HTML files
+      - name: Fetch codebrowser HTML files archives
         uses: dsaltares/fetch-gh-release-asset@master
         with:
           repo: 'Enna1/llvm-codebrowser'
           regex: true
           file: "llvm-release-.*\\.gz"
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Copy llvm codebrower
+      - name: Extract codebrowser HTML files
         run: |
           mkdir public-html
           for tar in $(find . -name '*.tar.gz'); do tar xf $tar --directory=public-html; done
+          pushd public-html
+          tree -d -H '.' -L 1 --noreport -T 'Code Browser for LLVM' --charset utf-8 -I "index.html" -I "data" -o index.html
+          popd
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
