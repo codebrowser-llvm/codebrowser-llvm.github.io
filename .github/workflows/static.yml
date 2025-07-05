@@ -26,9 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
       - name: Fetch codebrowser HTML files archives
         uses: dsaltares/fetch-gh-release-asset@master
         with:
@@ -44,9 +44,9 @@ jobs:
           tree -d -H '.' -L 1 --noreport -T 'Code Browser for LLVM' --charset utf-8 -I "index.html" -I "data" -o index.html
           popd
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: './public-html'
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
