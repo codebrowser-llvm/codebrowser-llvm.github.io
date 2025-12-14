@@ -93,6 +93,7 @@ jobs:
             -DLLVM_ENABLE_PROJECTS="${{ inputs.LLVM_ENABLE_PROJECTS }}" \
             -DLLVM_ENABLE_RUNTIMES="${{ inputs.LLVM_ENABLE_RUNTIMES }}" \
             -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=ON \
             -DLLVM_USE_LINKER=gold \
             -DLLVM_INCLUDE_TESTS=OFF \
             -DLLVM_INCLUDE_EXAMPLES=OFF \
