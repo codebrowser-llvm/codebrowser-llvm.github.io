@@ -2,7 +2,7 @@ name: Deploy codebrowser for llvm to Pages
 
 on:
   schedule:
-    - cron: '0 1 * * *'
+    - cron: '0 17 * * *'
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
@@ -21,6 +21,10 @@ on:
         required: false
         default: 'compiler-rt;libcxx;libcxxabi;libunwind'
         type: string
+
+env:
+  LLVM_ENABLE_PROJECTS: ${{ inputs.LLVM_ENABLE_PROJECTS || 'clang;lld' }}
+  LLVM_ENABLE_RUNTIMES: ${{ inputs.LLVM_ENABLE_RUNTIMES || 'compiler-rt;libcxx;libcxxabi;libunwind' }}
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
