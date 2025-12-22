@@ -115,9 +115,9 @@ jobs:
       - name: Run codebrowser generator
         if: steps.cache-codebrowser-generator.outputs.cache-hit != 'true'
         run: |
-          OUTPUT_DIRECTORY=./codebrowser-html-output/llvm-${{ steps.set-llvm-info.outputs.LLVM_GIT_BRANCH_AND_TAG }}
+          OUTPUT_DIRECTORY=./codebrowser-html-output
+          DATA_DIRECTORY=$OUTPUT_DIRECTORY/data
           VERSION=${{ steps.set-llvm-info.outputs.LLVM_GIT_BRANCH_AND_TAG }}
-          DATA_DIRECTORY=$OUTPUT_DIRECTORY/../data
           BUILD_DIRECTORY=./llvm-project/build
           SOURCE_DIRECTORY=./llvm-project
           ./codebrowser/generator/codebrowser_generator -b $BUILD_DIRECTORY -a -o $OUTPUT_DIRECTORY -p llvm_projects:$SOURCE_DIRECTORY:$VERSION
@@ -155,15 +155,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Extract codebrowser HTML files
         run: |
-          mkdir public-html
-          for tar in $(find . -name '*.tar.gz'); do tar xf $tar --directory=public-html; done
-          pushd public-html
-          tree -d -H '.' -L 1 --noreport -T 'Code Browser for LLVM' --charset utf-8 -I "index.html" -I "data" -o index.html
-          popd
+          for tar in $(find . -name '*.tar.gz'); do tar xf $tar ; done
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './public-html'
+          path: './codebrowser-html-output'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
