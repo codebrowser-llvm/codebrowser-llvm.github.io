@@ -93,8 +93,8 @@ jobs:
           mkdir build
           pushd build
           cmake -G "Ninja" \
-            -DCMAKE_C_COMPILER=clang \
-            -DCMAKE_CXX_COMPILER=clang++ \
+            -DCMAKE_C_COMPILER=clang-22 \
+            -DCMAKE_CXX_COMPILER=clang++-22 \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=1 \
             -DLLVM_ENABLE_PROJECTS="${{ env.LLVM_ENABLE_PROJECTS }}" \
             -DLLVM_ENABLE_RUNTIMES="${{ env.LLVM_ENABLE_RUNTIMES }}" \
